@@ -1,3 +1,13 @@
+body {
+  background-color: #ffffff;
+}
+
+html {
+  height: 100%;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
 
 .adjust-bar {
   -webkit-appearance: none;
@@ -463,9 +473,6 @@ to-transform: scale(1);
 }
 * {
   box-sizing: border-box;
-}
-html {
-  height: 100%;
 }
 .page {
   height: 100%;
