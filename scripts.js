@@ -3,7 +3,7 @@ const rangeSLider = document.querySelector('.adjust-bar.adjust-bar_theme_temp');
 
 rangeSLider.oninput = function() {
     output.innerHTML = this.value > 0 ? '+' + this.value : this.value;
-}
+};
 
 const arrowLeftDevs = document.querySelector('.devices__paginator .paginator__arrow_left');
 const arrowRightDevs = document.querySelector('.devices__paginator .paginator__arrow_right');
@@ -47,7 +47,7 @@ const INDICATOR_OFFSET = 265;
 
 const rotateToValue = function(rotate) {
     return Math.floor((Math.abs(rotate * 360 * 1.73 + INDICATOR_OFFSET) / 53) + MIN_VALUE);
-}
+};
 
 
 /**
@@ -164,7 +164,7 @@ const TEMPS = {
     'cold': 0,
     'warm': 23,
     'hot': 30
-}
+};
 
 document.querySelectorAll('.modal__filter-item_temp').forEach(l => {
     l.onclick = function() {
@@ -176,7 +176,7 @@ document.querySelectorAll('.modal__filter-item_temp').forEach(l => {
 const showModal = function(selector) {
     document.querySelector(selector).classList.toggle('modal_open', true);
     document.querySelector('body').style.overflow = 'hidden';
-}
+};
 
 document.querySelectorAll('.panel_temp').forEach(p => {
     p.onclick = function() {
