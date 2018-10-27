@@ -9,10 +9,10 @@ const arrowLeftDevs = document.querySelector('.devices__paginator .paginator__ar
 const arrowRightDevs = document.querySelector('.devices__paginator .paginator__arrow_right');
 const panelCountDevs = document.querySelectorAll('.devices__panel').length;
 const devices = document.querySelector('.devices');
-const pagiantorDevs = document.querySelector('.devices__paginator');
+const paginatorDevs = document.querySelector('.devices__paginator');
 let currentPageDevs = 1;
 
-pagiantorDevs.classList.toggle('paginator_hide', panelCountDevs < 7);
+paginatorDevs.classList.toggle('paginator_hide', panelCountDevs < 7);
 
 arrowRightDevs.addEventListener('click', function () {
     currentPageDevs += 1;
@@ -231,32 +231,3 @@ arrowLeftScens.addEventListener('click', function () {
     }
 });
 
-const selectButton = document.querySelector('.filter__select-button');
-const selectButtonText = document.querySelector('.filter__select-button .button__text');
-const selectOptions = document.querySelectorAll('.filter__select-item');
-const popup = document.querySelector('.filter__select-popup');
-
-selectButton.addEventListener('click', function() {
-    popup.classList.toggle('filter__select-popup_open');
-});
-
-let widths = '';
-window.addEventListener('scroll', function() {
-    widths += document.querySelectorAll('body')[0].offsetWidth;
-    document.querySelector('.stats').innerHTML = widths;
-});
-
-selectOptions.forEach(o => {
-    o.addEventListener('click', function(e) {
-        document.querySelector('#' + e.target.dataset.group).checked = true;
-
-        selectOptions.forEach(opt => opt.classList.toggle('filter__select-item_checked', false));
-        e.target.classList.toggle('filter__select-item_checked', true);
-        popup.classList.toggle('filter__select-popup_open', false);
-        selectButtonText.innerText = e.target.innerText;
-    })
-});
-
-document.querySelector('.menu__icon').addEventListener('click', function () {
-    document.querySelector('.menu').classList.toggle('menu_open');
-});

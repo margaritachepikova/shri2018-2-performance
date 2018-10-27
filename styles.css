@@ -189,9 +189,6 @@ html {
   top: 0;
   right: 40px;
 }
-.filter__select {
-  display: none;
-}
 .filter__item-label {
   display: inline-block;
   font-size: 13px;
@@ -396,9 +393,6 @@ html {
 }
 .menu {
   margin-left: 52px;
-}
-.menu__icon {
-  display: none;
 }
 .menu__item {
   margin-right: 27px;
@@ -617,9 +611,6 @@ to-transform: scale(1);
 }
 .weather__item_cloud-drizzle {
   background: url("assets/cloud-drizzle.webp") 100% 70%/26px no-repeat;
-}
-.stats {
-  opacity: 0;
 }
 .panel__icon {
   width: 24px;
