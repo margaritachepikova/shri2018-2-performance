@@ -14,7 +14,7 @@ let currentPageDevs = 1;
 
 paginatorDevs.classList.toggle('paginator_hide', panelCountDevs < 7);
 
-arrowRightDevs.addEventListener('click', function () {
+arrowRightDevs.addEventListener('click', () => {
     currentPageDevs += 1;
     arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
     devices.scroll({
@@ -24,7 +24,7 @@ arrowRightDevs.addEventListener('click', function () {
     });
 });
 
-arrowLeftDevs.addEventListener('click', function () {
+arrowLeftDevs.addEventListener('click', () => {
     if (currentPageDevs > 1) {
         currentPageDevs -= 1;
         arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
@@ -44,7 +44,7 @@ let minRotate = -0.42; // -150 градусов
 const MIN_VALUE = 26;
 const INDICATOR_OFFSET = 265;
 
-const rotateToValue = function(rotate) {
+const rotateToValue = (rotate) => {
     return Math.floor((Math.abs(rotate * 360 * 1.73 + INDICATOR_OFFSET) / 53) + MIN_VALUE);
 };
 
@@ -150,12 +150,12 @@ setEvtListeners();
 setRotate(0);
 
 document.querySelectorAll('.modal_close').forEach(b => {
-    b.onclick = function() {
+    b.addEventListener('click', () => {
         document.querySelectorAll('.modal').forEach(m => {
             m.classList.toggle('modal_open', false);
             document.querySelector('body').style.overflow = 'auto';
         });
-    }
+    });
 });
 
 const TEMPS = {
@@ -166,10 +166,10 @@ const TEMPS = {
 };
 
 document.querySelectorAll('.modal__filter-item_temp').forEach(l => {
-    l.onclick = function() {
+    l.addEventListener('click', () => {
         document.querySelector('.adjust-bar_theme_temp').value = TEMPS[this.id];
         document.querySelector('.modal_temp .modal__value').innerHTML = TEMPS[this.id] > 0 ? '+' + TEMPS[this.id] : TEMPS[this.id];
-    }
+    });
 });
 
 const showModal = function(selector) {
@@ -178,21 +178,21 @@ const showModal = function(selector) {
 };
 
 document.querySelectorAll('.panel_temp').forEach(p => {
-    p.onclick = function() {
+    p.addEventListener('click', () => {
         showModal('.modal_temp');
-    }
+    });
 });
 
 document.querySelectorAll('.panel_lamp').forEach(p => {
-    p.onclick = function() {
+    p.addEventListener('click', () => {
         showModal('.modal_light');
-    }
+    });
 });
 
 document.querySelectorAll('.panel_floor').forEach(p => {
-    p.onclick = function() {
+    p.addEventListener('click', () => {
         showModal('.modal_knob');
-    }
+    });
 });
 
 const arrowLeftScens = document.querySelector('.scenarios__paginator .paginator__arrow_left');
@@ -205,7 +205,7 @@ let currentPage = 1;
 
 pagiantorScens.classList.toggle('paginator_hide', panelCountScens <= 9);
 
-arrowRightScens.addEventListener('click', function () {
+arrowRightScens.addEventListener('click', () => {
     if (currentPage < pageCountScens) {
         currentPage += 1;
         arrowRightScens.classList.toggle('paginator__arrow_disabled', currentPage === pageCountScens);
@@ -218,7 +218,7 @@ arrowRightScens.addEventListener('click', function () {
     }
 });
 
-arrowLeftScens.addEventListener('click', function () {
+arrowLeftScens.addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage -= 1;
         arrowRightScens.classList.toggle('paginator__arrow_disabled', currentPage === pageCountScens);
