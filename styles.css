@@ -1,3 +1,22 @@
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: fallback;
+  src: local('PT Sans Bold'),
+  url('fonts/pt-sans-cyrillic-700.woff2') format('woff2');
+  url('fonts/pt-sans-cyrillic-700.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PT Sans Narrow Bold';
+  font-weight: 700;
+  font-display: fallback;
+  src: local('PT Sans Narrow Bold'),
+  url('fonts/pt-sans-narrow-latin-700.woff2') format('woff'),
+  url('fonts/pt-sans-narrow-latin-700.woff') format('woff');
+}
+
 body {
   background-color: #ffffff;
 }
@@ -591,7 +610,7 @@ to-transform: scale(1);
   font-size: 36px;
   font-weight: 700;
   line-height: 1.16;
-  font-family: "PT Sans Narrow", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "PT Sans Narrow Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 .weather__item_outside {
   padding-right: 31px;
@@ -626,4 +645,110 @@ to-transform: scale(1);
 
 .main__greeting {
   font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+a:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+a:hover,
+a:active {
+  outline: 0;
+}
+
+a:hover,
+a:focus {
+  color: #354b60;
+  text-decoration: underline;
+}
+
+button,
+input {
+  margin: 0;
+  font-size: 100%;
+  vertical-align: middle;
+  *overflow: visible;
+  line-height: normal;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+button {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+
+label,
+button,
+input[type="radio"] {
+  cursor: pointer;
+}
+
+[class*="span"] {
+  float: left;
+  min-height: 1px;
+  margin-left: 20px;
+}
+
+li {
+  line-height: 20px;
+}
+
+label,
+input,
+button {
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+input,
+button {
+  font-family: "PT Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+  border: 0;
+  -ms-interpolation-mode: bicubic;
+}
+
+input {
+  width: 206px;
+}
+
+input[type="radio"] {
+  margin: 4px 0 0;
+  margin-top: 1px;
+  *margin-top: 0;
+  line-height: normal;
+}
+
+input[type="radio"] {
+  width: auto;
+}
+
+input[type="radio"]:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
 }
