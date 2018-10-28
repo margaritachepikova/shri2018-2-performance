@@ -1,3 +1,170 @@
+const scenariosData = [
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Выключить весь свет в доме и во дворе'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_clock',
+        panelTitle: 'Я ухожу'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Включить свет в корридоре'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_temp_on',
+        panelTitle: 'Набрать горячую ванну',
+        panelSub: 'Начнётся в 18:00'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Выключить весь свет в доме и во дворе'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_clock',
+        panelTitle: 'Я ухожу'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Включить свет в корридоре'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_temp_on',
+        panelTitle: 'Набрать горячую ванну',
+        panelSub: 'Начнётся в 18:00'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Выключить весь свет в доме и во дворе'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Включить свет в корридоре'
+    },
+    {
+        panelClasses: ['scenarios__panel'],
+        iconClass: 'panel__icon_clock',
+        panelTitle: 'Я ухожу'
+    }
+];
+
+const scenarioTemplate = document.querySelector('template');
+const scenariosBlock = document.querySelector('.scenarios');
+
+const chunkSize = 9;
+const scenarioChunks = [];
+for (let i = 0; i < scenariosData.length; i = i + chunkSize) {
+    scenarioChunks.push(scenariosData.slice(i, i + chunkSize));
+}
+
+const scenarioPages = [];
+scenarioChunks.forEach(function () {
+    const page = document.createElement('div');
+    page.classList.add('scenarios__page');
+    scenarioPages.push(page);
+});
+
+function addScenarios (scenarios, container) {
+    scenarios.forEach(function (scenario) {
+        const template = scenarioTemplate.content.cloneNode(true);
+        const panelRoot = template.querySelector('.panel');
+        scenario.panelClasses.forEach(panelClass => {
+            panelRoot.classList.add(panelClass);
+        });
+        template.querySelector('.panel__icon').classList.add(scenario.iconClass);
+        template.querySelector('.panel__title').innerHTML = scenario.panelTitle;
+        const panelSub = template.querySelector('.panel__sub');
+        if (scenario.panelSub) {
+            panelSub.innerHTML = scenario.panelSub;
+        } else {
+            panelSub.parentNode.removeChild(panelSub);
+        }
+        if (scenario.modal) {
+            panelRoot.addEventListener('click', () => {
+                showModal(`.${scenario.modal}`);
+            });
+        }
+        container.appendChild(template);
+    });
+}
+
+scenarioPages.forEach(function (scenarioPage, index) {
+    addScenarios(scenarioChunks[index], scenarioPage);
+    scenariosBlock.appendChild(scenarioPage);
+});
+
+const devicesData = [
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_room', 'panel_floor'],
+        modal: 'modal_knob',
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Xiaomi Warm Floor',
+        panelSub: 'Включено'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_lamp'],
+        modal: 'modal_light',
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Xiaomi Yeelight LED Smart Bulb',
+        panelSub: 'Включено'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_cam'],
+        iconClass: 'panel__icon_light_off',
+        panelTitle: 'D-Link Omna 180 Cam',
+        panelSub: 'Включится в 17:00'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_room', 'panel_temp'],
+        modal: 'modal_temp',
+        iconClass: 'panel__icon_temp_off',
+        panelTitle: 'Elgato Eve Degree Connected',
+        panelSub: 'Включится в 17:00'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_lamp'],
+        modal: 'modal_light',
+        iconClass: 'panel__icon_light_off',
+        panelTitle: 'LIFX Mini Day & Dusk A60 E27',
+        panelSub: 'Включится в 17:00'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_room'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Xiaomi Mi Air Purifier 2S',
+        panelSub: 'Включено'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_lamp'],
+        modal: 'modal_light',
+        iconClass: 'panel__icon_light_off',
+        panelTitle: 'Philips Zhirui',
+        panelSub: 'Выключено'
+    },
+    {
+        panelClasses: [ 'panel_device', 'devices__panel', 'panel_kitchen'],
+        iconClass: 'panel__icon_light_on',
+        panelTitle: 'Philips Purifier',
+        panelSub: 'Включено'
+    }
+];
+
+const devicesBlock = document.querySelector('.content__item_devices');
+const devicesSection = document.createElement('section');
+devicesSection.classList.add('devices');
+addScenarios(devicesData, devicesSection);
+devicesBlock.appendChild(devicesSection);
+
 const output = document.querySelector('.modal__value');
 const rangeSLider = document.querySelector('.adjust-bar.adjust-bar_theme_temp');
 
@@ -19,8 +186,7 @@ arrowRightDevs.addEventListener('click', () => {
     arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
     devices.scroll({
         top: 0,
-        left: 1366,
-        behavior: 'smooth'
+        left: 1366
     });
 });
 
@@ -30,8 +196,7 @@ arrowLeftDevs.addEventListener('click', () => {
         arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
         devices.scroll({
             top: 0,
-            left: -1366,
-            behavior: 'smooth'
+            left: -1366
         });
     }
 });
@@ -177,24 +342,6 @@ const showModal = function(selector) {
     document.querySelector('body').style.overflow = 'hidden';
 };
 
-document.querySelectorAll('.panel_temp').forEach(p => {
-    p.addEventListener('click', () => {
-        showModal('.modal_temp');
-    });
-});
-
-document.querySelectorAll('.panel_lamp').forEach(p => {
-    p.addEventListener('click', () => {
-        showModal('.modal_light');
-    });
-});
-
-document.querySelectorAll('.panel_floor').forEach(p => {
-    p.addEventListener('click', () => {
-        showModal('.modal_knob');
-    });
-});
-
 const arrowLeftScens = document.querySelector('.scenarios__paginator .paginator__arrow_left');
 const arrowRightScens = document.querySelector('.scenarios__paginator .paginator__arrow_right');
 const panelCountScens = document.querySelectorAll('.scenarios__panel').length;
@@ -212,8 +359,7 @@ arrowRightScens.addEventListener('click', () => {
         arrowLeftScens.classList.toggle('paginator__arrow_disabled', currentPage === 1);
         scenarios.scroll({
             top: 0,
-            left: 645,
-            behavior: 'smooth'
+            left: 645
         });
     }
 });
@@ -225,9 +371,7 @@ arrowLeftScens.addEventListener('click', () => {
         arrowLeftScens.classList.toggle('paginator__arrow_disabled', currentPage === 1);
         scenarios.scroll({
             top: 0,
-            left: -645,
-            behavior: 'smooth'
+            left: -645
         });
     }
 });
-
