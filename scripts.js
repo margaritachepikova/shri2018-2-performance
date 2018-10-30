@@ -58,14 +58,19 @@ const scenariosData = [
     }
 ];
 
+function getPanelsChunks (panelsData, chunkSize) {
+    const panelChunks = [];
+    for (let i = 0; i < panelsData.length; i = i + chunkSize) {
+        panelChunks.push(panelsData.slice(i, i + chunkSize));
+    }
+    return panelChunks;
+}
+
 const scenarioTemplate = document.querySelector('template');
 const scenariosBlock = document.querySelector('.scenarios');
 
-const chunkSize = 9;
-const scenarioChunks = [];
-for (let i = 0; i < scenariosData.length; i = i + chunkSize) {
-    scenarioChunks.push(scenariosData.slice(i, i + chunkSize));
-}
+const scenarioChunkSize = 9;
+const scenarioChunks = getPanelsChunks(scenariosData, scenarioChunkSize);
 
 const scenarioPages = [];
 scenarioChunks.forEach(function () {
@@ -81,27 +86,29 @@ function addScenarios (scenarios, container) {
         scenario.panelClasses.forEach(panelClass => {
             panelRoot.classList.add(panelClass);
         });
-        template.querySelector('.panel__icon').classList.add(scenario.iconClass);
-        template.querySelector('.panel__title').innerHTML = scenario.panelTitle;
-        const panelSub = template.querySelector('.panel__sub');
-        if (scenario.panelSub) {
-            panelSub.innerHTML = scenario.panelSub;
+        if (scenario.imageLink) {
+            panelRoot.innerHTML = scenario.imageLink;
         } else {
-            panelSub.parentNode.removeChild(panelSub);
-        }
-        if (scenario.modal) {
-            panelRoot.addEventListener('click', () => {
-                showModal(`.${scenario.modal}`);
-            });
+            template.querySelector('.panel__icon').classList.add(scenario.iconClass);
+            template.querySelector('.panel__title').innerHTML = scenario.panelTitle;
+            const panelSub = template.querySelector('.panel__sub');
+            if (scenario.panelSub) {
+                panelSub.innerHTML = scenario.panelSub;
+            } else {
+                panelSub.parentNode.removeChild(panelSub);
+            }
+            if (scenario.modal) {
+                panelRoot.addEventListener('click', () => {
+                    showModal(`.${scenario.modal}`);
+                });
+            }
         }
         container.appendChild(template);
     });
 }
 
-scenarioPages.forEach(function (scenarioPage, index) {
-    addScenarios(scenarioChunks[index], scenarioPage);
-    scenariosBlock.appendChild(scenarioPage);
-});
+addScenarios(scenarioChunks[0], scenarioPages[0]);
+scenariosBlock.appendChild(scenarioPages[0]);
 
 const devicesData = [
     {
@@ -186,7 +193,8 @@ arrowRightDevs.addEventListener('click', () => {
     arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
     devices.scroll({
         top: 0,
-        left: 1366
+        left: 1366,
+        behavior: 'smooth'
     });
 });
 
@@ -196,7 +204,8 @@ arrowLeftDevs.addEventListener('click', () => {
         arrowLeftDevs.classList.toggle('paginator__arrow_disabled', currentPageDevs === 1);
         devices.scroll({
             top: 0,
-            left: -1366
+            left: -1366,
+            behavior: 'smooth'
         });
     }
 });
@@ -344,22 +353,24 @@ const showModal = function(selector) {
 
 const arrowLeftScens = document.querySelector('.scenarios__paginator .paginator__arrow_left');
 const arrowRightScens = document.querySelector('.scenarios__paginator .paginator__arrow_right');
-const panelCountScens = document.querySelectorAll('.scenarios__panel').length;
-const pageCountScens = document.querySelectorAll('.scenarios__page').length;
+const pageCountScens = scenarioPages.length;
 const scenarios = document.querySelector('.scenarios');
-const pagiantorScens = document.querySelector('.scenarios__paginator');
+const paginatorScens = document.querySelector('.scenarios__paginator');
 let currentPage = 1;
 
-pagiantorScens.classList.toggle('paginator_hide', panelCountScens <= 9);
+paginatorScens.classList.toggle('paginator_hide', pageCountScens < 2);
 
 arrowRightScens.addEventListener('click', () => {
     if (currentPage < pageCountScens) {
+        addScenarios(scenarioChunks[currentPage], scenarioPages[currentPage]);
+        scenariosBlock.appendChild(scenarioPages[currentPage]);
         currentPage += 1;
         arrowRightScens.classList.toggle('paginator__arrow_disabled', currentPage === pageCountScens);
         arrowLeftScens.classList.toggle('paginator__arrow_disabled', currentPage === 1);
         scenarios.scroll({
             top: 0,
-            left: 645
+            left: 645,
+            behavior: 'smooth'
         });
     }
 });
@@ -371,7 +382,56 @@ arrowLeftScens.addEventListener('click', () => {
         arrowLeftScens.classList.toggle('paginator__arrow_disabled', currentPage === 1);
         scenarios.scroll({
             top: 0,
-            left: -645
+            left: -645,
+            behavior: 'smooth'
         });
+    }
+});
+
+const mainScenariosData = [
+    {
+        panelClasses: ['main__panel', 'panel_device', 'panel_first'],
+        iconClass: 'panel__icon_temp_off',
+        panelTitle: 'Philips Cooler',
+        panelSub: 'Начнет охлаждать в 16:30'
+    },
+    {
+        panelClasses: ['main__panel', 'panel_device'],
+        iconClass: 'panel__icon_light_off',
+        panelTitle: 'Xiaomi Yeelight LED Smart Bulb',
+        panelSub: 'Включится в 17:00'
+    },
+    {
+        panelClasses: ['main__panel', 'panel_device', 'panel_out_bot'],
+        iconClass: 'panel__icon_light_off',
+        panelTitle: 'Xiaomi Yeelight LED Smart Bulb',
+        panelSub: 'Включится в 17:00'
+    },
+    {
+        panelClasses: ['main__panel', 'panel_device', 'panel_out_bot'],
+        imageLink: `<a target="_blank" href="http://ya.ru" rel="noopener">
+                        <img src="assets/banner.webp" border="0">
+                    </a>`
+    }
+];
+
+const mainUpcoming = document.createElement('div');
+mainUpcoming.classList.add('main__upcoming');
+const mainContainer = document.querySelector('.main__upcoming-wrapper');
+const displayedPanelsCount = 3;
+
+const mainScenarioChunks = getPanelsChunks(mainScenariosData, displayedPanelsCount);
+addScenarios(mainScenarioChunks[0], mainUpcoming);
+mainContainer.appendChild(mainUpcoming);
+
+let scrollTopOffset = 90;
+let prevScrollTop = 0;
+let mainScenarioPage = 1;
+mainUpcoming.addEventListener('scroll', () => {
+    if (mainUpcoming.scrollTop - prevScrollTop > scrollTopOffset && mainScenarioChunks.length > mainScenarioPage) {
+        prevScrollTop = mainUpcoming.scrollTop;
+        scrollTopOffset = 402;
+        addScenarios(mainScenarioChunks[mainScenarioPage], mainUpcoming);
+        mainScenarioPage++;
     }
 });
